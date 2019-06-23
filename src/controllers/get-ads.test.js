@@ -1,23 +1,23 @@
-const  makePostAd = require ('./post-ads')
+const  makeGetAllAds = require ('./get-ads')
 const  makeFakeAd = require ('../../__test__/fixtures/ad')
-describe('post ad controller', () => {
-    it('successfully posts an  ad', async () => {
-        const postAd = makePostAd({ addAd: c => c })
+describe('get ad controller', () => {
+    it('successfully gets ads', async () => {
+        const getAllAds = makeGetAllAds({ listAllAds: c => c })
         const ad = makeFakeAd()
         const request = {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: ad
+          body: undefined
         }
         const expected = {
           headers: {
             'Content-Type': 'application/json'
           },
-          statusCode: 201,
-          body: { posted: request.body }
+          statusCode: 200,
+          body: undefined
         }
-        const actual = await postAd(request)
+        const actual = await getAllAds(request)
         expect(actual).toEqual(expected)
     })
 })

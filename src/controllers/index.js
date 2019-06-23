@@ -1,13 +1,16 @@
-const { addAd } = require("../use-cases/index");
+const { addAd, listAllAds} = require("../use-cases/index");
 const makePostAd =require ("./post-ads");
+const makeGetAllAds =require ("./get-ads");
 
 
+const getAllAds = makeGetAllAds({ listAllAds });
 const postAd = makePostAd({ addAd });
 
 
 const adController = Object.freeze({
-  postAd
+  postAd,
+  getAllAds
 });
 
 module.exports= adController;
-module.exports= { postAd };
+module.exports= { postAd ,getAllAds};

@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
-const {postAd}=require('./controllers/index')
+const {postAd,getAllAds}=require('./controllers/index')
 
 
 dotenv.config();
@@ -10,12 +10,10 @@ const apiRoot = process.env.DM_BASE_URL;
 const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
-app.use((_, res, next) => {
-  res.set({ Tk: "!" });
-  next();
-});
-app.get("/ad", (req, res) => {
-  res.send(`${apiRoot}/ad`);
+
+app.get("/ad", async (req, res,next) => {
+  const response=await getAllAds();
+  res.json(response)
 });
 
 app.post("/ad", async (req, res) => {

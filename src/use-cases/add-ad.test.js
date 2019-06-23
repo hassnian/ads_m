@@ -14,4 +14,6 @@ describe("add ad", () => {
     const inserted = await addAd(newAd);
     expect(inserted).toMatchObject(newAd);
   });
+
+  
 });
