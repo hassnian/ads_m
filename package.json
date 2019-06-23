@@ -1,0 +1,35 @@
+{
+  "name": "ads_m",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watch",
+    "start": "nodemon  ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hassnian/ads_m.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hassnian/ads_m/issues"
+  },
+  "homepage": "https://github.com/hassnian/ads_m#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cuid": "^2.1.6",
+    "express": "^4.17.1",
+    "mongodb": "^3.2.7"
+  },
+  "devDependencies": {
+    "dotenv": "^8.0.0",
+    "faker": "^4.1.0",
+    "jest": "^24.3.1",
+    "mongodb-memory-server": "^4.0.2",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.10"
+  }
+}
