@@ -15,5 +15,13 @@ describe("add ad", () => {
     expect(inserted).toMatchObject(newAd);
   });
 
+  it("return the ad if there is an ad whith the id into  the database", async () => {
+    const newAd = makeFakeAd();
+    const addAd = makeAddAd({ adsDb });
+    await addAd(newAd);
+    const inserted = await addAd(newAd);
+    expect(inserted).toMatchObject(newAd);
+  });
+
   
 });
