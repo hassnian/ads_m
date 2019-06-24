@@ -88,4 +88,26 @@ describe("ad", () => {
     const ad = makeAd(fakeAd);
     expect(ad.getCreatedOn()).toBe(fakeAd.createdOn);
   });
+
+  it("isExpired returns correct date", () => {
+    const fakeAd = makeFakeAd();
+    const ad = makeAd(fakeAd);
+    expect(ad.isExpired()).toBe(false);
+  });
+
+  it("expire truns ad expired", () => {
+    const fakeAd = makeFakeAd();
+    const ad = makeAd(fakeAd);
+    ad.expire()
+    expect(ad.isExpired()).toBe(true);
+  });
+  it("unexpires truns ad unexpired", () => {
+    const fakeAd = makeFakeAd();
+    const ad = makeAd(fakeAd);
+    ad.expire()
+    expect(ad.isExpired()).toBe(true);
+    ad.unexpire();
+    expect(ad.isExpired()).toBe(false);
+
+  });
 });

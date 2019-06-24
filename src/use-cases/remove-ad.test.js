@@ -10,7 +10,7 @@ describe("remove Ad", () => {
   beforeEach(() => {
     adsDb = makeAdsDb({ makeDb });
   });
-  it("handles non existent Ads", async () => {
+  it("handles non existent Ads id", async () => {
     const removeAd = makeRemoveAd({ adsDb });
     const fakeAd=makeFakeAd({id:null});
     expect(removeAd(fakeAd)).rejects.toThrow("You must supply an Ad id.");

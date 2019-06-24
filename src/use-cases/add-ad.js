@@ -13,6 +13,7 @@ module.exports= function makeAddAd ({ adsDb }) {
       description: ad.getDescription(),
       createdOn: ad.getCreatedOn(),
       id: ad.getId(),
+      expired: ad.isExpired()
     })
   }
 }

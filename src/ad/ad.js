@@ -3,7 +3,8 @@ module.exports= function buildMakeAd({ Id }) {
     title, 
     description, 
     id = Id.makeId() ,
-    createdOn= Date.now()
+    createdOn= new Date(Date.now()),
+    expired=false
 } = {}) {
   
     if (!title) {
@@ -27,6 +28,9 @@ module.exports= function buildMakeAd({ Id }) {
       getDescription: () => description,
       getId: () => id,
       getCreatedOn: () => createdOn,
+      isExpired:()=> expired,
+      expire:()=> expired=true,
+      unexpire:()=> expired=false,
     });
   };
 }

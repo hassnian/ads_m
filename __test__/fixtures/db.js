@@ -20,8 +20,8 @@ exports= async function closeDb () {
   await db.close()
 }
 
-// module.exports= async function clearDb () {
-//   await db.collection('ads').deleteMany({})
+// module.exports= async function clearDb (databaseb) {
+//   await databaseb.collection('ads').deleteMany({})
 //   return true
 // }
 

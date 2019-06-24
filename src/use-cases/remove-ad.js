@@ -15,7 +15,7 @@ module.exports= function makeRemoveAd ({ adsDb }) {
     return hardDelete(adToDelete)
   }
 
-// TODO: soft delete when expire function
+
 
   function deleteNothing () {
     return {

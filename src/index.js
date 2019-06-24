@@ -1,8 +1,12 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
-const {postAd,getAllAds,deleteAd}=require('./controllers/index')
-
+const {
+  postAd,
+  getAllAds,
+  deleteAd,
+  deleteExpireAd
+} = require("./controllers/index");
 
 dotenv.config();
 
@@ -11,22 +15,25 @@ const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
 
-app.get("/ad", async (req, res,next) => {
-  const response=await getAllAds();
-  res.json(response)
+app.get("/ad", async (req, res, next) => {
+  const response = await getAllAds();
+  res.json(response);
 });
 
 app.post("/ad", async (req, res) => {
-    const response=await postAd(req)
-    res.json(response)
-  });
+  const response = await postAd(req);
+  res.json(response);
+});
 
-  app.delete("/ad/:id", async (req, res) => {
-    const response=await deleteAd(req)
-    res.json(response)
-  });
+app.delete("/ad/:id", async (req, res) => {
+  const response = await deleteAd(req);
+  res.json(response);
+});
 
-
+app.delete("/ad/expire/:date", async (req, res) => {
+  const response = await deleteExpireAd(req);
+  res.json(response);
+});
 
 if (process.env.DM_ENV === "dev") {
   // listen for requests

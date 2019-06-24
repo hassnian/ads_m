@@ -9,10 +9,11 @@ const Id = Object.freeze({
 
 module.exports=function makeFakeAd (overrides) {
   const ad = {
-    createdOn: Date.now(),
+    createdOn: new Date(Date.now()),
     title:faker.lorem.sentence(4), 
     description:faker.lorem.paragraph(1), 
-    id : Id.makeId() 
+    id : Id.makeId() ,
+    expired:false
   }
    return {
     ...ad,
