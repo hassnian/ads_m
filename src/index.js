@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
-const {postAd,getAllAds}=require('./controllers/index')
+const {postAd,getAllAds,deleteAd}=require('./controllers/index')
 
 
 dotenv.config();
@@ -21,7 +21,10 @@ app.post("/ad", async (req, res) => {
     res.json(response)
   });
 
-
+  app.delete("/ad/:id", async (req, res) => {
+    const response=await deleteAd(req)
+    res.json(response)
+  });
 
 
 
