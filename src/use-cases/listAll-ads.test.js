@@ -9,6 +9,10 @@ describe("list all ads", () => {
   beforeEach(() => {
     adsDb = makeAdsDb({ makeDb });
   });
+  afterEach(async () => {
+    await adsDb.dropDatabase();
+  });
+  
   it("list all ads", async () => {
     const newAd1 = makeFakeAd();
     const newAd2 = makeFakeAd();

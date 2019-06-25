@@ -10,9 +10,13 @@ describe("remove Ad", () => {
   beforeEach(() => {
     adsDb = makeAdsDb({ makeDb });
   });
+  afterEach(async () => {
+    await adsDb.dropDatabase();
+  });
+
   it("handles non existent Ads", async () => {
     const removeAd = makeRemoveAd({ adsDb });
-    const fakeAd=makeFakeAd({id:null});
+    const fakeAd = makeFakeAd({ id: null });
     expect(removeAd(fakeAd)).rejects.toThrow("You must supply an Ad id.");
   });
 
@@ -34,7 +38,7 @@ describe("remove Ad", () => {
       message: "Ad deleted."
     };
     const addAd = makeAddAd({ adsDb });
-    await addAd(fakeAd)
+    await addAd(fakeAd);
     const actual = await removeAd(fakeAd);
     expect(actual).toEqual(expected);
   });

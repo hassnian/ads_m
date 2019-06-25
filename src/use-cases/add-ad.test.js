@@ -8,6 +8,9 @@ describe("add ad", () => {
   beforeEach(() => {
     adsDb = makeAdsDb({ makeDb });
   });
+  afterEach(async () => {
+    await adsDb.dropDatabase();
+  });
    it("inserts ad in the database", async () => {
     const newAd = makeFakeAd();
     const addAd = makeAddAd({ adsDb });

@@ -5,6 +5,7 @@ module.exports = function makeAdsDb({ makeDb }) {
     insert,
     findAll,
     findById,
+    dropDatabase,
     remove
   });
 
@@ -39,5 +40,10 @@ module.exports = function makeAdsDb({ makeDb }) {
     const db = await makeDb()
     const result = await db.collection('ads').deleteOne({ _id })
     return result.deletedCount
+  }
+
+  async function dropDatabase() {
+    const db = await makeDb();
+    return await db.dropDatabase();
   }
 };
