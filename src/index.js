@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const {
   postAd,
+  postUser,
   getAllAds,
   deleteAd,
   deleteExpireAd,
@@ -39,6 +40,13 @@ app.delete("/ad/expire/:date", async (req, res) => {
   const response = await deleteExpireAd(req);
   res.json(response);
 });
+
+app.post("/user", async (req, res) => {
+  const response = await postUser(req);
+  res.json(response);
+});
+
+
 
 if (process.env.DM_ENV === "dev") {
   // listen for requests

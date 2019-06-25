@@ -1,4 +1,5 @@
 const makeAdsDb = require ('./ads-db')// al interactions with database
+const makeUsersDb = require ('./users-db')// al interactions with database
 const mongodb = require ('mongodb')
 const dotenv = require("dotenv");
 
@@ -21,4 +22,5 @@ const makeDb= async function  () {
 module.exports= makeDb
 
 const adsDb = makeAdsDb({ makeDb })
-module.exports= adsDb
+const usersDb = makeUsersDb({ makeDb })
+module.exports= {adsDb,usersDb}
