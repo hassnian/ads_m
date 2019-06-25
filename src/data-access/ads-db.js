@@ -8,6 +8,7 @@ module.exports = function makeAdsDb({ makeDb }) {
     findOldestAd,
     getNumberOfAds,
     findExpirablesByDate,
+    dropDatabase,
     update,
     remove
   });
@@ -18,11 +19,10 @@ module.exports = function makeAdsDb({ makeDb }) {
     const { _id: id, ...insertedInfo } = result.ops[0];
     return { id, ...insertedInfo };
   }
-  //TODO: show only non expired sprint 3
 
-  async function findAll() {
+  async function findAll(condition) {
     const db = await makeDb();
-    const result = await db.collection("ads").find({ expired: false }); // only non expired
+    const result = await db.collection("ads").find(condition); 
     return (await result.toArray()).map(({ _id: id, ...found }) => ({
       id,
       ...found
@@ -42,7 +42,7 @@ module.exports = function makeAdsDb({ makeDb }) {
       .limit(1)
       .toArray();
 
-    return oldest.length>0 ? oldest[0] : false
+    return oldest.length > 0 ? oldest[0] : false;
   }
   async function findById({ id: _id }) {
     const db = await makeDb();
@@ -79,5 +79,10 @@ module.exports = function makeAdsDb({ makeDb }) {
     const db = await makeDb();
     const result = await db.collection("ads").deleteOne({ _id });
     return result.deletedCount;
+  }
+
+  async function dropDatabase() {
+    const db = await makeDb();
+    return await db.dropDatabase();
   }
 };
