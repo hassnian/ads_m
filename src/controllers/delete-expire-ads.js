@@ -8,8 +8,8 @@ module.exports= function makeDeleteExpireAd ({ expireAds }) {
         const expireData = await expireAds({ date: httpRequest.params.date })
         return {
           headers,
-          statusCode: 400,
-          body: { expireData }
+          statusCode: expireData.expiredCount === 0 ? 404 : 200,
+          body: { ...expireData }
         }
       } catch (e) {
         // TODO: Error logging

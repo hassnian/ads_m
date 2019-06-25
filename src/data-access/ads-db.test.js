@@ -4,31 +4,48 @@ const makeFakeAd = require("../../__test__/fixtures/ad");
 
 describe("add dbs", () => {
   let adsDb;
-  beforeEach( async () => {
+  beforeEach(async () => {
     adsDb = await makeAdsDb({ makeDb });
   });
+  afterEach(async () => {
+    await adsDb.dropDatabase();
+  });
 
-  //TODO:  add show all test
-  
+ 
 
-  it("findOldestAd ", async () => {
-    const ad = makeFakeAd();
-    await adsDb.insert(ad);
-    console.log(ad);
+  it("find and returns the Oldest Ad ", async () => {
+    const ad1 = makeFakeAd({ createdOn: "1999-04-21" });
+    const ad2 = makeFakeAd({ createdOn: "2020-04-21" });
+    await adsDb.insert(ad1);
+    await adsDb.insert(ad2);
+    const oldest = await adsDb.findOldestAd();
+    expect(oldest.createdOn).toBe(ad1.createdOn);
+  });
+
+  it("doesnt find oldest ad and returns false", async () => {
     const oldest = await adsDb.findOldestAd();
     expect(oldest).toBe(false);
   });
 
 
-  it("findExpirablesByDate an ad", async () => {
-    const ad = makeFakeAd();
-    await adsDb.insert(ad);
-    const found = await adsDb.findExpirablesByDate({date:"4000-02-24"});
-    expect(found[0]["_id"]).toBe(ad.id);
+  it("  gets correct Number of Ads ", async () => {
+    const ad1 = makeFakeAd();
+    const ad2 = makeFakeAd();
+    await adsDb.insert(ad1);
+    await adsDb.insert(ad2);
+    const number = await adsDb.getNumberOfAds();
+    expect(number).toBe(2);
   });
-  
 
-  
+
+  it("findExpirablesByDate the correct ad", async () => {
+    const ad = makeFakeAd({createdOn:new Date("2020-01-19")});
+    await adsDb.insert(ad);
+    const found = await adsDb.findExpirablesByDate({ date: "2020-01-20" });
+    expect(found[0]["_id"]).toBe(ad.id);
+    expect(found[0].createdOn).toMatchObject(ad.createdOn);
+  });
+
   it("inserts an ad", async () => {
     const ad = makeFakeAd();
     const result = await adsDb.insert(ad);
@@ -56,6 +73,4 @@ describe("add dbs", () => {
     const updated = await adsDb.update(ad);
     expect(updated.title).toBe("changed");
   });
-
- 
 });

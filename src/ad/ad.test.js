@@ -95,13 +95,13 @@ describe("ad", () => {
     expect(ad.isExpired()).toBe(false);
   });
 
-  it("expire truns ad expired", () => {
+  it("expire turns ad expired", () => {
     const fakeAd = makeFakeAd();
     const ad = makeAd(fakeAd);
     ad.expire()
     expect(ad.isExpired()).toBe(true);
   });
-  it("unexpires truns ad unexpired", () => {
+  it("unexpires turns ad unexpired", () => {
     const fakeAd = makeFakeAd();
     const ad = makeAd(fakeAd);
     ad.expire()

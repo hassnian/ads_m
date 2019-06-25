@@ -3,7 +3,6 @@ const  makeFakeAd = require ('../../__test__/fixtures/ad')
 describe('get ad controller', () => {
     it('successfully gets ads', async () => {
         const getAllAds = makeGetAllAds({ listAllAds: c => c })
-        const ad = makeFakeAd()
         const request = {
           headers: {
             'Content-Type': 'application/json'

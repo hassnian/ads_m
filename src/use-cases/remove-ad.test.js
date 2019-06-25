@@ -10,6 +10,10 @@ describe("remove Ad", () => {
   beforeEach(() => {
     adsDb = makeAdsDb({ makeDb });
   });
+  afterEach(async () => {
+    await adsDb.dropDatabase();
+  });
+
   it("handles non existent Ads id", async () => {
     const removeAd = makeRemoveAd({ adsDb });
     const fakeAd=makeFakeAd({id:null});

@@ -10,6 +10,10 @@ describe("expire Ad", () => {
   beforeEach(() => {
     adsDb = makeAdsDb({ makeDb });
   });
+  afterEach(async () => {
+    await adsDb.dropDatabase();
+  });
+
   
   it("handles non existent Ads to expire", async () => {
     const expireAds = makeExpireAds({ adsDb });

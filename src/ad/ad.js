@@ -1,12 +1,11 @@
-module.exports= function buildMakeAd({ Id }) {
-  return function makeAd({ 
-    title, 
-    description, 
-    id = Id.makeId() ,
-    createdOn= new Date(Date.now()),
-    expired=false
-} = {}) {
-  
+module.exports = function buildMakeAd({ Id }) {
+  return function makeAd({
+    title,
+    description,
+    id = Id.makeId(),
+    createdOn = new Date(Date.now()),
+    expired = false
+  } = {}) {
     if (!title) {
       throw new Error("Ad must have a title");
     }
@@ -20,7 +19,7 @@ module.exports= function buildMakeAd({ Id }) {
       throw new Error("Title and description cannot be the same");
     }
     if (!Id.isValidId(id)) {
-      throw new Error('Ad must have a valid id.')
+      throw new Error("Ad must have a valid id.");
     }
 
     return Object.freeze({
@@ -28,9 +27,9 @@ module.exports= function buildMakeAd({ Id }) {
       getDescription: () => description,
       getId: () => id,
       getCreatedOn: () => createdOn,
-      isExpired:()=> expired,
-      expire:()=> expired=true,
-      unexpire:()=> expired=false,
+      isExpired: () => expired,
+      expire: () => (expired = true),
+      unexpire: () => (expired = false)
     });
   };
-}
+};
