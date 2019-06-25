@@ -5,6 +5,8 @@ module.exports = function makeAdsDb({ makeDb }) {
     insert,
     findAll,
     findById,
+    findOldestAd,
+    getNumberOfAds,
     findExpirablesByDate,
     update,
     remove
@@ -20,11 +22,27 @@ module.exports = function makeAdsDb({ makeDb }) {
 
   async function findAll() {
     const db = await makeDb();
-    const result = await db.collection("ads").find();
+    const result = await db.collection("ads").find({ expired: false }); // only non expired
     return (await result.toArray()).map(({ _id: id, ...found }) => ({
       id,
       ...found
     }));
+  }
+  async function getNumberOfAds() {
+    const db = await makeDb();
+    const result = await db.collection("ads").countDocuments();
+    return result;
+  }
+  async function findOldestAd() {
+    const db = await makeDb();
+    const oldest = await db
+      .collection("ads")
+      .find()
+      .sort({ createdOn: 1 })
+      .limit(1)
+      .toArray();
+
+    return oldest.length>0 ? oldest[0] : false
   }
   async function findById({ id: _id }) {
     const db = await makeDb();
@@ -38,10 +56,10 @@ module.exports = function makeAdsDb({ makeDb }) {
   }
 
   async function update({ id: _id, ...adsInfo }) {
-    const db = await makeDb();   
+    const db = await makeDb();
     const result = await db
       .collection("ads")
-      .updateOne({ _id }, { $set: { ...adsInfo } }); 
+      .updateOne({ _id }, { $set: { ...adsInfo } });
     return result.modifiedCount > 0 ? { id: _id, ...adsInfo } : null;
   }
 
@@ -52,9 +70,9 @@ module.exports = function makeAdsDb({ makeDb }) {
     const DateMinusOneDay = new Date(dateStamp - oneDayInEpochTime);
     const result = await db
       .collection("ads")
-      .find({ createdOn: { $lte: DateMinusOneDay } });
+      .find({ createdOn: { $lte: DateMinusOneDay }, expired: false });
     const found = await result.toArray();
-    return found.length>0 ? found : false;
+    return found.length > 0 ? found : false;
   }
 
   async function remove({ id: _id }) {

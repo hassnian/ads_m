@@ -4,12 +4,31 @@ const makeFakeAd = require("../../__test__/fixtures/ad");
 
 describe("add dbs", () => {
   let adsDb;
-  beforeEach(() => {
-    adsDb = makeAdsDb({ makeDb });
+  beforeEach( async () => {
+    adsDb = await makeAdsDb({ makeDb });
   });
 
   //TODO:  add show all test
+  
 
+  it("findOldestAd ", async () => {
+    const ad = makeFakeAd();
+    await adsDb.insert(ad);
+    console.log(ad);
+    const oldest = await adsDb.findOldestAd();
+    expect(oldest).toBe(false);
+  });
+
+
+  it("findExpirablesByDate an ad", async () => {
+    const ad = makeFakeAd();
+    await adsDb.insert(ad);
+    const found = await adsDb.findExpirablesByDate({date:"4000-02-24"});
+    expect(found[0]["_id"]).toBe(ad.id);
+  });
+  
+
+  
   it("inserts an ad", async () => {
     const ad = makeFakeAd();
     const result = await adsDb.insert(ad);
@@ -37,4 +56,6 @@ describe("add dbs", () => {
     const updated = await adsDb.update(ad);
     expect(updated.title).toBe("changed");
   });
+
+ 
 });

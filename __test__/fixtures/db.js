@@ -11,6 +11,7 @@ module.exports = async function makeDb() {
   connection =
     connection || (await MongoClient.connect(URL, { useNewUrlParser: true }));
   db = db || (await connection.db(DB_NAME));
+  await db.collection(DB_NAME).deleteMany({}) 
   return db;
 };
 
@@ -20,8 +21,7 @@ exports= async function closeDb () {
   await db.close()
 }
 
-// module.exports= async function clearDb (databaseb) {
-//   await databaseb.collection('ads').deleteMany({})
+// exports= async function clearDb (databaseb) {
 //   return true
 // }
 
