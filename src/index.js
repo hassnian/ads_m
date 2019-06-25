@@ -5,7 +5,8 @@ const {
   postAd,
   getAllAds,
   deleteAd,
-  deleteExpireAd
+  deleteExpireAd,
+  getOne
 } = require("./controllers/index");
 
 dotenv.config();
@@ -22,6 +23,10 @@ app.get("/ad", async (req, res, next) => {
 
 app.post("/ad", async (req, res) => {
   const response = await postAd(req);
+  res.json(response);
+});
+app.get("/ad/:id", async (req, res) => {
+  const response = await getOne(req);
   res.json(response);
 });
 
