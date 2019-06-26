@@ -110,4 +110,18 @@ describe("ad", () => {
     expect(ad.isExpired()).toBe(false);
 
   });
+
+  it("getFavourites returns correct favourite", () => {
+    const fakeAd = makeFakeAd();
+    const ad = makeAd(fakeAd);
+    expect(ad.getFavourites()).toMatchObject([]);
+  });
+  it("addFavourite pushes id into the array ", () => {
+    const fakeAd = makeFakeAd();
+    const ad = makeAd(fakeAd);
+    ad.addFavourite("exmpaleID123")
+    ad.addFavourite("exmpaleID321")
+    expect(ad.getFavourites()).toMatchObject(["exmpaleID123","exmpaleID321"]);
+  });
+  
 });

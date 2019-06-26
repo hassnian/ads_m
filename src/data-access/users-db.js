@@ -24,7 +24,7 @@ module.exports = function makeUsersDb({ makeDb }) {
       id,
       ...found
     }));
-  }
+  } 
 
 
   async function findById({ id: _id }) {

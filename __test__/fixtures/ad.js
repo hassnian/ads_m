@@ -13,7 +13,8 @@ module.exports=function makeFakeAd (overrides) {
     title:faker.lorem.sentence(4), 
     description:faker.lorem.paragraph(1), 
     id : Id.makeId() ,
-    expired:false
+    expired:false,
+    favourites: [],
   }
    return {
     ...ad,

@@ -41,11 +41,6 @@ describe("user test", () => {
     expect(user.getCreatedOn()).toBe(fakeUser.createdOn);
   });
 
-  it("getFavourites returns correct date", () => {
-    const fakeUser = makeFakeUser();
-    const user = makeUser(fakeUser);
-    expect(user.getFavourites()).toMatchObject([]);
-  });
 
   it("getFavourites returns correct favourite", () => {
     const fakeUser = makeFakeUser();
@@ -74,5 +69,22 @@ describe("user test", () => {
     user.addNotification({title:title2})
     expect(user.getNotifications()).toMatchObject([`Ad ${title1} is no longer available `,`Ad ${title2} is no longer available `]);
   });
+
+  it("checkIfIsAlreadyFavourited return true when an id is already in the array  ", () => {
+    const fakeUser = makeFakeUser();
+    const user = makeUser(fakeUser);
+    user.addFavourite("123")
+    const response=user.checkIfIsAlreadyFavourited("123")
+    expect(response).toBe(true);
+  });
+  it("checkIfIsAlreadyFavourited return false when an id is  NOT already in the array  ", () => {
+    const fakeUser = makeFakeUser();
+    const user = makeUser(fakeUser);
+    user.addFavourite("123")
+    const response=user.checkIfIsAlreadyFavourited("321")
+    expect(response).toBe(false);
+  });
+
+  
 
 });

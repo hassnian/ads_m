@@ -18,10 +18,11 @@ module.exports = function buildMakeUser({ Id }) {
       getId: () => id,
       getCreatedOn: () => createdOn,
       getFavourites: () => favourites,
-      addFavourite: (adId) => (favourites.push(adId)),
+      addFavourite: adId => favourites.push(adId),
+      checkIfIsAlreadyFavourited: adId => favourites.includes(adId),
       getNotifications: () => notifications,
-      addNotification: (ad) => (notifications.push(`Ad ${ad.title} is no longer available `)),
-
+      addNotification: ad =>
+        notifications.push(`Ad ${ad.title} is no longer available `)
     });
   };
 };

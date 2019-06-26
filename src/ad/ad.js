@@ -4,7 +4,8 @@ module.exports = function buildMakeAd({ Id }) {
     description,
     id = Id.makeId(),
     createdOn = new Date(Date.now()),
-    expired = false
+    expired = false,
+    favourites = []
   } = {}) {
     if (!title) {
       throw new Error("Ad must have a title");
@@ -29,7 +30,9 @@ module.exports = function buildMakeAd({ Id }) {
       getCreatedOn: () => createdOn,
       isExpired: () => expired,
       expire: () => (expired = true),
-      unexpire: () => (expired = false)
+      unexpire: () => (expired = false),
+      getFavourites: () => favourites,
+      addFavourite: userId => favourites.push(userId),
     });
   };
 };

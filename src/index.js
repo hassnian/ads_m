@@ -7,6 +7,7 @@ const {
   getAllAds,
   deleteAd,
   deleteExpireAd,
+  patchFavouriteUserAd,
   getOne
 } = require("./controllers/index");
 
@@ -46,7 +47,10 @@ app.post("/user", async (req, res) => {
   res.json(response);
 });
 
-
+app.patch("/user/favourite/ad", async (req, res) => {
+  const response = await patchFavouriteUserAd(req);
+  res.json(response);
+});
 
 if (process.env.DM_ENV === "dev") {
   // listen for requests
