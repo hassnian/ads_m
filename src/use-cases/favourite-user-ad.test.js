@@ -6,6 +6,7 @@ const makeUsersDb = require("../data-access/users-db");
 const makeFakeAd = require("../../__test__/fixtures/ad");
 const makeFakeUser = require("../../__test__/fixtures/user");
 const makeDb = require("../../__test__/fixtures/db");
+const makeExpireAds=require('./expire-ads')
 const makeAd = require("../ad/index");
 const makeUser = require("../user/index");
 
@@ -135,6 +136,34 @@ describe("expire Ad", () => {
 
     await addAd(fakeAd);
     await addUser(fakeUser);
+    await favouriteUserAd(req);
+
+    const actual = await favouriteUserAd(req);
+    expect(actual).toEqual(expected);
+  });
+
+
+  it("returns cant add to favlist bcz is expired ", async () => {
+    const favouriteUserAd = makeFavouriteUserAd({ usersDb, adsDb });
+    const expireAds = makeExpireAds({ usersDb, adsDb });
+
+    const fakeAd = makeFakeAd();
+    const fakeUser = makeFakeUser();
+    const addAd = makeAddAd({ adsDb });
+    const addUser = makeAddUser({ usersDb });
+
+    const req = {
+      userId: fakeUser.id,
+      adId: fakeAd.id
+    };
+    const expected = {
+      success: false,
+      message: "Cant ad to favourite an expired  Ad"
+    };
+
+    await addAd(fakeAd);
+    await addUser(fakeUser);
+    await expireAds({date:"2040-04-01"})
     await favouriteUserAd(req);
 
     const actual = await favouriteUserAd(req);

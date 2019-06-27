@@ -1,5 +1,6 @@
 const makeUser = require("./index");
 const makeFakeUser = require("../../__test__/fixtures/user");
+const makeFakeAd = require("../../__test__/fixtures/ad");
 
 describe("user test", () => {
   it("does  throw an error when there is NOT a title", () => {
@@ -63,11 +64,11 @@ describe("user test", () => {
   it("addNotification pushes the msg into the array ", () => {
     const fakeUser = makeFakeUser();
     const user = makeUser(fakeUser);
-    const title1="11111";
-    const title2="22222";
-    user.addNotification({title:title1})
-    user.addNotification({title:title2})
-    expect(user.getNotifications()).toMatchObject([`Ad ${title1} is no longer available `,`Ad ${title2} is no longer available `]);
+    const ad1=makeFakeAd();
+    const ad2=makeFakeAd()
+    user.addNotification(ad1)
+    user.addNotification(ad2)
+    expect(user.getNotifications()).toMatchObject([`Ad ${ad1.title} is no longer available `,`Ad ${ad2.title} is no longer available `]);
   });
 
   it("checkIfIsAlreadyFavourited return true when an id is already in the array  ", () => {
@@ -85,6 +86,27 @@ describe("user test", () => {
     expect(response).toBe(false);
   });
 
+  it("can  remove an favourite from ", () => {
+    const fakeUser = makeFakeUser();
+    const user = makeUser(fakeUser);
+    const id1="exmpaleID123"
+    const id2="exmpaleID321"
+    user.addFavourite(id1)
+    user.addFavourite(id2)
+    user.removeFavourite(id1)
+    expect(user.getFavourites()).toMatchObject([id2]);
+  });
   
+  it("it can remove all favourites  ", () => {
+    const fakeUser = makeFakeUser();
+    const user = makeUser(fakeUser);
+    const id1="exmpaleID123"
+    const id2="exmpaleID321"
+    user.addFavourite(id1)
+    user.addFavourite(id2)
+    expect(user.getFavourites()).toMatchObject([id1,id2]);
+    user.removeAllFavourites();
+    expect(user.getFavourites()).toMatchObject([]);
+  });
 
 });

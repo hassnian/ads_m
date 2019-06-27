@@ -1,6 +1,9 @@
 const makeAd =require ('../ad/index')
+const makeNoLongerAvailableAd = require('./noLongerAvailable-ad')
 
-module.exports= function makeRemoveAd ({ adsDb }) {
+module.exports= function makeRemoveAd ({ adsDb ,usersDb}) {
+  const noLongerAvailableAd=makeNoLongerAvailableAd({adsDb,usersDb})
+
   return async function removeAd ({ id } = {}) {
     if (!id) {
       throw new Error('You must supply an Ad id.')
@@ -12,7 +15,7 @@ module.exports= function makeRemoveAd ({ adsDb }) {
       return deleteNothing()
     }
   
-    return hardDelete(adToDelete)
+    return await hardDelete(adToDelete)
   }
 
 
@@ -25,6 +28,7 @@ module.exports= function makeRemoveAd ({ adsDb }) {
   }
  
   async function hardDelete (ad) {
+    await noLongerAvailableAd(ad)
     await adsDb.remove(ad)
     return {
       deletedCount: 1,

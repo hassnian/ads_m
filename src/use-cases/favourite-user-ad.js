@@ -23,10 +23,17 @@ module.exports = function makeFavouriteUserAd({ usersDb, adsDb }) {
         message: "Didnt find an Ad with the provided id"
       };
     }
+    if(adInfo.expired){
+      return {
+        success: false,
+        message: "Cant ad to favourite an expired  Ad"
+      };
+    }
 
     const user = makeUser(userInfo);
     const ad = makeAd(adInfo);
 
+  
     if (user.checkIfIsAlreadyFavourited(ad.getId())) {
       return {
         success: false,

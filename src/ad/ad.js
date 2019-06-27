@@ -33,6 +33,9 @@ module.exports = function buildMakeAd({ Id }) {
       unexpire: () => (expired = false),
       getFavourites: () => favourites,
       addFavourite: userId => favourites.push(userId),
+      removeFavourite: userId =>
+        (favourites = favourites.filter(id => id != userId)),
+      removeAllFavourites: () => (favourites = [])
     });
   };
 };

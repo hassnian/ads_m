@@ -48,7 +48,7 @@ describe("ad", () => {
     );
   });
 
-  //TODO: test id
+
 
   it("can have an id", () => {
     const ad = makeFakeAd({ id: "invalid" });
@@ -119,9 +119,32 @@ describe("ad", () => {
   it("addFavourite pushes id into the array ", () => {
     const fakeAd = makeFakeAd();
     const ad = makeAd(fakeAd);
-    ad.addFavourite("exmpaleID123")
-    ad.addFavourite("exmpaleID321")
-    expect(ad.getFavourites()).toMatchObject(["exmpaleID123","exmpaleID321"]);
+    const id1="exmpaleID123"
+    const id2="exmpaleID321"
+    ad.addFavourite(id1)
+    ad.addFavourite(id2)
+    expect(ad.getFavourites()).toMatchObject([id1,id2]);
+  });
+  it("can remove from favourite pushes id into the array ", () => {
+    const fakeAd = makeFakeAd();
+    const ad = makeAd(fakeAd);
+    const id1="exmpaleID123"
+    const id2="exmpaleID321"
+    ad.addFavourite(id1)
+    ad.addFavourite(id2)
+    ad.removeFavourite(id1)
+    expect(ad.getFavourites()).toMatchObject([id2]);
   });
   
+  it("it can remove all favourites  ", () => {
+    const fakeAd = makeFakeAd();
+    const ad = makeAd(fakeAd);
+    const id1="exmpaleID123"
+    const id2="exmpaleID321"
+    ad.addFavourite(id1)
+    ad.addFavourite(id2)
+    expect(ad.getFavourites()).toMatchObject([id1,id2]);
+    ad.removeAllFavourites();
+    expect(ad.getFavourites()).toMatchObject([]);
+  });
 });

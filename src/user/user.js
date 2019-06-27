@@ -22,7 +22,10 @@ module.exports = function buildMakeUser({ Id }) {
       checkIfIsAlreadyFavourited: adId => favourites.includes(adId),
       getNotifications: () => notifications,
       addNotification: ad =>
-        notifications.push(`Ad ${ad.title} is no longer available `)
+        notifications.push(`Ad ${ad.title} is no longer available `),
+      removeFavourite: adId =>
+        (favourites = favourites.filter(id => id != adId)),
+      removeAllFavourites: () => (favourites = [])
     });
   };
 };
